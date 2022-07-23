@@ -1,0 +1,93 @@
+package merche
+
+import (
+	"context"
+	"fmt"
+	"io"
+	"net/http"
+	"net/url"
+	"strings"
+)
+
+const (
+	defaultBaseURL = "https://api.mercedes-benz.com/"
+	userAgent      = "go-merche"
+)
+
+// A Client manages communication with the Mercedes API.
+type Client struct {
+	client *http.Client
+
+	// Base URL for API requests. Defaults to the Mercedes API.
+	//BaseURL should always be specified with a trailing slash.
+	BaseURL *url.URL
+
+	// User agent used when communicating with the Mercedes API.
+	UserAgent string
+
+	common service // Reuse a single struct instead of allocating one for each service on the heap.
+
+	VehicleStatus *VehicleStatusService
+}
+
+type service struct {
+	api *Client
+}
+
+// NewClient returns a new Mercedes API client. If a nil httpClient is
+// provided, a new http.Client will be used. To use API methods which require
+// authentication, provide an http.Client that will perform the authentication
+// like golang.org/x/oauth2 library.
+func NewClient(httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = &http.Client{}
+	}
+	baseURL, _ := url.Parse(defaultBaseURL)
+
+	c := &Client{
+		client:    httpClient,
+		BaseURL:   baseURL,
+		UserAgent: userAgent,
+	}
+	c.common.api = c
+
+	c.VehicleStatus = (*VehicleStatusService)(&c.common)
+
+	return c
+}
+
+func (c *Client) newRequest(ctx context.Context, method, path string, body io.Reader) (*http.Request, error) {
+	if !strings.HasSuffix(c.BaseURL.Path, "/") {
+		return nil, fmt.Errorf("BaseURL must have a trailing slash, but %q does not", c.BaseURL)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, method, c.BaseURL.String()+path, body)
+	if err != nil {
+		return nil, err
+	}
+
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
+	req.Header.Set("Accept", "application/json")
+	if c.UserAgent != "" {
+		req.Header.Set("User-Agent", c.UserAgent)
+	}
+	return req, nil
+}
+
+// Bool is a helper routine that allocates a new bool value
+// to store v and returns a pointer to it.
+func Bool(v bool) *bool { return &v }
+
+// Int is a helper routine that allocates a new int value
+// to store v and returns a pointer to it.
+func Int(v int) *int { return &v }
+
+// Int64 is a helper routine that allocates a new int64 value
+// to store v and returns a pointer to it.
+func Int64(v int64) *int64 { return &v }
+
+// String is a helper routine that allocates a new string value
+// to store v and returns a pointer to it.
+func String(v string) *string { return &v }
