@@ -3,6 +3,7 @@ package merche
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -15,7 +16,7 @@ type ExVeError struct {
 }
 
 func (e *ExVeError) Error() string {
-	return ""
+	return fmt.Sprintf("Mercedes API response with %v: %v", e.ExveErrorID, e.ExveErrorMsg)
 }
 
 type UnauthorizedError struct {
@@ -25,7 +26,7 @@ type UnauthorizedError struct {
 }
 
 func (e *UnauthorizedError) Error() string {
-	return ""
+	return fmt.Sprintf("Mercedes API response with %v: %v", e.StatusCode, e.Message)
 }
 
 type MercedesAPIError struct {
