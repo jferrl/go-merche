@@ -1,5 +1,8 @@
 # go-merche
 
+[![Test Status](https://github.com/jferrl/go-merche/workflows/tests/badge.svg)](https://github.com/jferrl/go-merche/actions?query=workflow%3Atests)
+[![codecov](https://codecov.io/gh/jferrl/go-merche/branch/main/graph/badge.svg?token=68I4BZF235)](https://codecov.io/gh/jferrl/go-merche)
+
 Go library for accessing the Mercedes-Benz vehicles API.
 
 ## Authentication
