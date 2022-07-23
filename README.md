@@ -6,7 +6,7 @@ Go library for accessing the Mercedes-Benz vehicles API.
 
 The go-merche library does not handle authentication. So that, when
 creating a new client, pass an `http.Client` that can handle authentication.
-The Recommended way to do this is using the [oauth2][]
+The Recommended way to do this is using the oauth2 golang pkg.
 
 ```go
 import "golang.org/x/oauth2"
