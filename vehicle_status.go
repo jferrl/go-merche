@@ -18,13 +18,13 @@ type ResourceMetaInfo struct {
 
 // Resource struct for Resource.
 type Resource struct {
-	Timestamp *int32  `json:"timestamp,omitempty"`
+	Timestamp *int64  `json:"timestamp,omitempty"`
 	Value     *string `json:"value,omitempty"`
 }
 
 // VehicleStatus defiles the response from VehicleStatus.
 type VehicleStatus struct {
-	Decklidstatus          *Resource `json:"decklidstatus,omitempty"`
+	Doorlockstatusdecklid  *Resource `json:"doorlockstatusdecklid,omitempty"`
 	Doorstatusfrontleft    *Resource `json:"doorstatusfrontleft,omitempty"`
 	Doorstatusfrontright   *Resource `json:"doorstatusfrontright,omitempty"`
 	Doorstatusrearleft     *Resource `json:"doorstatusrearleft,omitempty"`
@@ -41,9 +41,6 @@ type VehicleStatus struct {
 	Windowstatusrearleft   *Resource `json:"windowstatusrearleft,omitempty"`
 	Windowstatusrearright  *Resource `json:"windowstatusrearright,omitempty"`
 }
-
-// ContainerVehicleStatus .
-type ContainerVehicleStatus []*VehicleStatus
 
 // GetVehicleStatusOptions .
 type GetVehicleStatusOptions struct {
@@ -73,6 +70,10 @@ func (s *VehicleStatusService) GetAvailableResources(ctx context.Context, opts *
 		return nil, &Response{resp}, err
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, &Response{resp}, handleResponseError(resp)
+	}
+
 	var resources []*ResourceMetaInfo
 	err = json.NewDecoder(resp.Body).Decode(&resources)
 	if err != nil {
@@ -88,7 +89,7 @@ func (s *VehicleStatusService) GetAvailableResources(ctx context.Context, opts *
 // readout timestamp for the corresponding car.
 //
 // Mercedes API docs: https://developer.mercedes-benz.com/products/vehicle_status/docs#_3_get_all_values_of_the_vehicle_status_api
-func (s *VehicleStatusService) GetContainersVehicleStatus(ctx context.Context, opts *GetVehicleStatusOptions) (ContainerVehicleStatus, *Response, error) {
+func (s *VehicleStatusService) GetContainersVehicleStatus(ctx context.Context, opts *GetVehicleStatusOptions) ([]*VehicleStatus, *Response, error) {
 	path := fmt.Sprintf("%v/%v/containers/vehiclestatus", vehicleStatusPathPrefix, opts.VehicleID)
 
 	req, err := s.api.newRequest(ctx, http.MethodGet, path, nil)
@@ -101,7 +102,11 @@ func (s *VehicleStatusService) GetContainersVehicleStatus(ctx context.Context, o
 		return nil, &Response{resp}, err
 	}
 
-	var status ContainerVehicleStatus
+	if resp.StatusCode != http.StatusOK {
+		return nil, &Response{resp}, handleResponseError(resp)
+	}
+
+	var status []*VehicleStatus
 	err = json.NewDecoder(resp.Body).Decode(&status)
 	if err != nil {
 		return nil, &Response{resp}, err

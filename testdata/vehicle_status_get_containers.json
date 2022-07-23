@@ -1,0 +1,98 @@
+[
+    {
+        "doorlockstatusdecklid": {
+            "value": "true",
+            "timestamp": 1541406596000
+        }
+    },
+    {
+        "doorstatusfrontleft": {
+            "value": "false",
+            "timestamp": 1541751294000
+        }
+    },
+    {
+        "doorstatusfrontright": {
+            "value": "true",
+            "timestamp": 1541751278000
+        }
+    },
+    {
+        "doorstatusrearleft": {
+            "value": "false",
+            "timestamp": 1541751294000
+        }
+    },
+    {
+        "doorstatusrearright": {
+            "value": "false",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "interiorLightsFront": {
+            "value": "false",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "interiorLightsRear": {
+            "value": "false",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "lightswitchposition": {
+            "value": "2",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "readingLampFrontLeft": {
+            "value": "false",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "readingLampFrontRight": {
+            "value": "false",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "rooftopstatus": {
+            "value": "1",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "sunroofstatus": {
+            "value": "1",
+            "timestamp": 1541751044000
+        }
+    },
+    {
+        "windowstatusfrontleft": {
+            "value": "3",
+            "timestamp": 1541751248000
+        }
+    },
+    {
+        "windowstatusfrontright": {
+            "value": "2",
+            "timestamp": 1541751263000
+        }
+    },
+    {
+        "windowstatusrearleft": {
+            "value": "5",
+            "timestamp": 1541751073000
+        }
+    },
+    {
+        "windowstatusrearright": {
+            "value": "4",
+            "timestamp": 1541751161000
+        }
+    }
+]
