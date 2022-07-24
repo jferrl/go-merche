@@ -28,7 +28,7 @@ func main() {
 }
 ```
 
-Using the `context` package, you can easily pass cancelation signals and 
+Using the `context` package, you can easily pass cancelation signals and
 deadlines to various services of the client for handling a request.
 
 ## Authentication
