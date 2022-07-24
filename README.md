@@ -6,6 +6,30 @@
 
 Go library for accessing the Mercedes-Benz vehicles API.
 
+## Usage
+
+go-merche is compatible with modern Go releases.
+
+Build a new client, then you can use the services to reach different parts of the Mercedes API. For example:
+
+```go
+import (
+    "context"
+
+    "github.com/jferrl/go-merche"
+    )
+
+func main() {
+ ctx := context.Background()
+ 
+ client := merche.NewClient(nil)
+
+ resources, _, err := client.VehicleStatus.GetAvailableResources(ctx, &merche.GetVehicleStatusOptions{ VehicleID: "EXVETESTVIN000001" })
+}
+```
+
+Using the `context` package, one can easily pass cancelation signals and deadlines to various services of the client for handling a request.
+
 ## Authentication
 
 The go-merche library does not handle authentication. So that, when
@@ -25,3 +49,11 @@ func main() {
  client := merche.NewClient(tc)
 }
 ```
+
+When using an authenticated Client, all calls made by the client will include the specified OAuth token.
+
+Here you can find an example of how to authenticate with Mercedes OAuth API <https://github.com/jferrl/go-merche/tree/main/example/mercedes_api_oauth>
+
+## License
+
+This library is distributed under the BSD-style license found in the LICENSE file.
