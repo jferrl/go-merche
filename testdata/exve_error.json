@@ -1,5 +1,5 @@
 {
-    "exveErrorId": "string",
-    "exveErrorMsg": "string",
-    "exveErrorRef": "string"
+    "exveErrorId": "Id",
+    "exveErrorMsg": "Msg",
+    "exveErrorRef": "Ref"
 }

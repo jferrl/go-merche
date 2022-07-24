@@ -8,11 +8,13 @@ import (
 	"net/http"
 )
 
+var errUnmarshalBody = errors.New("error handler: error unmarshalling response body")
+
 // ExVeError struct for ExVeError.
 type ExVeError struct {
-	ExveErrorID  *string `json:"exveErrorId,omitempty"`
-	ExveErrorMsg *string `json:"exveErrorMsg,omitempty"`
-	ExveErrorRef *string `json:"exveErrorRef,omitempty"`
+	ExveErrorID  string `json:"exveErrorId,omitempty"`
+	ExveErrorMsg string `json:"exveErrorMsg,omitempty"`
+	ExveErrorRef string `json:"exveErrorRef,omitempty"`
 }
 
 func (e *ExVeError) Error() string {
@@ -20,9 +22,9 @@ func (e *ExVeError) Error() string {
 }
 
 type UnauthorizedError struct {
-	ErrorMessage *string `json:"errorMessage,omitempty"`
-	StatusCode   *string `json:"statusCode,omitempty"`
-	Message      *string `json:"message,omitempty"`
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	StatusCode   string `json:"statusCode,omitempty"`
+	Message      string `json:"message,omitempty"`
 }
 
 func (e *UnauthorizedError) Error() string {
@@ -47,7 +49,7 @@ func handleResponseError(resp *http.Response) error {
 		var exVeError ExVeError
 		err = json.Unmarshal(body, &exVeError)
 		if err != nil {
-			return errors.New("error handler: error unmarshalling response body")
+			return errUnmarshalBody
 		}
 		return &exVeError
 	}
@@ -56,7 +58,7 @@ func handleResponseError(resp *http.Response) error {
 		var authErr UnauthorizedError
 		err = json.Unmarshal(body, &authErr)
 		if err != nil {
-			return errors.New("error handler: error unmarshalling response body")
+			return errUnmarshalBody
 		}
 		return &authErr
 	}

@@ -92,7 +92,7 @@ func (s *VehicleStatusService) GetAvailableResources(ctx context.Context, opts *
 func (s *VehicleStatusService) GetContainersVehicleStatus(ctx context.Context, opts *GetVehicleStatusOptions) ([]*VehicleStatus, *Response, error) {
 	path := fmt.Sprintf("%v/%v/containers/vehiclestatus", vehicleStatusPathPrefix, opts.VehicleID)
 
-	req, err := s.api.newRequest(ctx, http.MethodGet, path, nil)
+	req, err := s.api.newRequest(ctx, http.MethodGet, path, http.NoBody)
 	if err != nil {
 		return nil, nil, err
 	}
