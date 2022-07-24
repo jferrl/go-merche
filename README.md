@@ -28,7 +28,8 @@ func main() {
 }
 ```
 
-Using the `context` package, you can easily pass cancelation signals and deadlines to various services of the client for handling a request.
+Using the `context` package, you can easily pass cancelation signals and 
+deadlines to various services of the client for handling a request.
 
 ## Authentication
 
@@ -50,9 +51,11 @@ func main() {
 }
 ```
 
-When using an authenticated Client, all calls made by the client will include the specified OAuth token.
+When using an authenticated Client, all calls made by the client will
+include the specified OAuth token.
 
-Here you can find an example of how to authenticate with Mercedes OAuth API <https://github.com/jferrl/go-merche/tree/main/example/mercedes_api_oauth>
+Here you can find an example of how to authenticate with Mercedes
+OAuth API <https://github.com/jferrl/go-merche/tree/main/example/mercedes_api_oauth>
 
 ## License
 
