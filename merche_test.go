@@ -8,12 +8,26 @@ import (
 	"testing"
 )
 
+type writer struct {
+	data []byte
+}
+
+func (w *writer) Write(data []byte) (n int, err error) {
+	w.data = data
+	return len(data), nil
+}
+
 func TestClient_do(t *testing.T) {
-	type FakeResponse struct{}
+	type fakeResponse struct{}
+
+	type args struct {
+		v any
+	}
 
 	tests := []struct {
 		name            string
 		mercedesAPIMock *httptest.Server
+		args            args
 		want            *Response
 		wantErr         error
 	}{
@@ -45,6 +59,23 @@ func TestClient_do(t *testing.T) {
 		{
 			name:            "mercedes not content response",
 			mercedesAPIMock: createFakeServer(http.StatusNoContent, ""),
+			args: args{
+				v: &fakeResponse{},
+			},
+		},
+		{
+			name:            "mercedes api response: nil decoding",
+			mercedesAPIMock: createFakeServer(http.StatusOK, "vehicle_status_get_resources.json"),
+			args: args{
+				v: nil,
+			},
+		},
+		{
+			name:            "mercedes api response: copy to writer",
+			mercedesAPIMock: createFakeServer(http.StatusOK, "vehicle_status_get_resources.json"),
+			args: args{
+				v: new(writer),
+			},
 		},
 	}
 	for _, tt := range tests {
@@ -55,9 +86,7 @@ func TestClient_do(t *testing.T) {
 			c.BaseURL = url
 			req, _ := c.newRequest(context.Background(), http.MethodGet, "", http.NoBody)
 
-			var fr FakeResponse
-
-			_, err := c.do(req, &fr)
+			_, err := c.do(req, tt.args.v)
 			if err != nil && err.Error() != tt.wantErr.Error() {
 				t.Errorf("Client.do() error = %v, wantErr %v", err, tt.wantErr)
 				return

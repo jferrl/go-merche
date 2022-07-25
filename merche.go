@@ -91,12 +91,18 @@ func (c *Client) do(req *http.Request, v any) (*Response, error) {
 		return &Response{resp}, err
 	}
 
-	decErr := json.NewDecoder(resp.Body).Decode(v)
-	if decErr == io.EOF {
-		decErr = nil // ignore EOF errors caused by empty response body
-	}
-	if decErr != nil {
-		err = decErr
+	switch v := v.(type) {
+	case nil:
+	case io.Writer:
+		_, err = io.Copy(v, resp.Body)
+	default:
+		decErr := json.NewDecoder(resp.Body).Decode(v)
+		if decErr == io.EOF {
+			decErr = nil // ignore EOF errors caused by empty response body
+		}
+		if decErr != nil {
+			err = decErr
+		}
 	}
 
 	return &Response{resp}, err
