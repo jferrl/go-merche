@@ -1,12 +1,9 @@
 package merche
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 )
-
-var errUnmarshalBody = errors.New("error handler: error unmarshalling response body")
 
 // ExVeError struct for ExVeError.
 type ExVeError struct {
