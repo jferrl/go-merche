@@ -31,6 +31,27 @@ func main() {
 Using the `context` package, you can easily pass cancelation signals and
 deadlines to various services of the client for handling a request.
 
+## How to enable mercedes APIs
+
+1) Own a Mercedes Benz Car with Mercedes me installed and working.
+2) Create an application in <https://developer.mercedes-benz.com/>
+3) Register to the following APIs (all of them):
+   - [Electric Vehicle Status](https://developer.mercedes-benz.com/products/electric_vehicle_status)
+   - [Fuel Status](https://developer.mercedes-benz.com/products/fuel_status)
+   - [Pay As You Drive Insurance](https://developer.mercedes-benz.com/products/pay_as_you_drive_insurance) 
+   - [Vehicle Lock Status](https://developer.mercedes-benz.com/products/vehicle_lock_status)
+   - [Vehicle Status](https://developer.mercedes-benz.com/products/vehicle_status)
+
+## Token Creation
+
+To create a Mercedes API token it's necessary to perform the following steps:
+
+1) Create the APP and register it to all APIs as describe in "How to enable mercedes APIs"
+2) Logout in all browser from Mercedes Me (Developer site included)
+3) Execute the "mercedes_api_oauth" example with your personal client_id and client_secret
+4) Using your Mercedes Me credential log in: a new web-page will ask to authorize the APP created in the step 1 to access to the personal information associated to the APIs registered
+5) Enable all information and press Allow
+
 ## Authentication
 
 The go-merche library does not handle authentication. So that, when
