@@ -2,7 +2,6 @@ package merche
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -60,27 +59,18 @@ type VehicleStatusService service
 func (s *VehicleStatusService) GetAvailableResources(ctx context.Context, opts *GetVehicleStatusOptions) ([]*ResourceMetaInfo, *Response, error) {
 	path := fmt.Sprintf("%v/%v/resources", vehicleStatusPathPrefix, opts.VehicleID)
 
-	req, err := s.api.newRequest(ctx, http.MethodGet, path, http.NoBody)
+	req, err := s.client.newRequest(ctx, http.MethodGet, path, http.NoBody)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	resp, err := s.api.client.Do(req)
-	if err != nil {
-		return nil, &Response{resp}, err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return nil, &Response{resp}, handleResponseError(resp)
-	}
-
 	var resources []*ResourceMetaInfo
-	err = json.NewDecoder(resp.Body).Decode(&resources)
+	resp, err := s.client.do(req, &resources)
 	if err != nil {
-		return nil, &Response{resp}, err
+		return nil, resp, err
 	}
 
-	return resources, &Response{resp}, nil
+	return resources, resp, nil
 }
 
 // GetVehicleStatus gets containers resource of the Vehicle Status API
@@ -92,25 +82,16 @@ func (s *VehicleStatusService) GetAvailableResources(ctx context.Context, opts *
 func (s *VehicleStatusService) GetContainersVehicleStatus(ctx context.Context, opts *GetVehicleStatusOptions) ([]*VehicleStatus, *Response, error) {
 	path := fmt.Sprintf("%v/%v/containers/vehiclestatus", vehicleStatusPathPrefix, opts.VehicleID)
 
-	req, err := s.api.newRequest(ctx, http.MethodGet, path, http.NoBody)
+	req, err := s.client.newRequest(ctx, http.MethodGet, path, http.NoBody)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	resp, err := s.api.client.Do(req)
-	if err != nil {
-		return nil, &Response{resp}, err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return nil, &Response{resp}, handleResponseError(resp)
-	}
-
 	var status []*VehicleStatus
-	err = json.NewDecoder(resp.Body).Decode(&status)
+	resp, err := s.client.do(req, &status)
 	if err != nil {
-		return nil, &Response{resp}, err
+		return nil, resp, err
 	}
 
-	return status, &Response{resp}, nil
+	return status, resp, nil
 }

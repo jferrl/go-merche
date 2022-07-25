@@ -33,19 +33,6 @@ func TestVehicleStatusService_GetAvailableResources(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "invalid status code",
-			fields: fields{
-				mercedesAPIMock: createFakeServer(http.StatusNoContent, ""),
-			},
-			args: args{
-				ctx: ctx,
-				opts: &GetVehicleStatusOptions{
-					VehicleID: fakeVehicleID,
-				},
-			},
-			wantErr: true,
-		},
-		{
 			name: "decoding response error",
 			fields: fields{
 				mercedesAPIMock: createFakeServer(http.StatusOK, "invalid_response"),
@@ -187,19 +174,6 @@ func TestVehicleStatusService_GetContainersVehicleStatus(t *testing.T) {
 		want    []*VehicleStatus
 		wantErr bool
 	}{
-		{
-			name: "invalid status code",
-			fields: fields{
-				mercedesAPIMock: createFakeServer(http.StatusNoContent, ""),
-			},
-			args: args{
-				ctx: ctx,
-				opts: &GetVehicleStatusOptions{
-					VehicleID: fakeVehicleID,
-				},
-			},
-			wantErr: true,
-		},
 		{
 			name: "decoding response error",
 			fields: fields{

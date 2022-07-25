@@ -1,10 +1,8 @@
 package merche
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -37,35 +35,6 @@ type MercedesAPIError struct {
 
 func (e *MercedesAPIError) Error() string {
 	return http.StatusText(e.StatusCode)
-}
-
-func handleResponseError(resp *http.Response) error {
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return errors.New("error handler: error reading response body")
-	}
-
-	if isExVeError(resp.StatusCode) {
-		var exVeError ExVeError
-		err = json.Unmarshal(body, &exVeError)
-		if err != nil {
-			return errUnmarshalBody
-		}
-		return &exVeError
-	}
-
-	if resp.StatusCode == http.StatusUnauthorized {
-		var authErr UnauthorizedError
-		err = json.Unmarshal(body, &authErr)
-		if err != nil {
-			return errUnmarshalBody
-		}
-		return &authErr
-	}
-
-	return &MercedesAPIError{
-		resp.StatusCode,
-	}
 }
 
 func isExVeError(statusCode int) bool {

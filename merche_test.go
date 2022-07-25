@@ -1,15 +1,20 @@
 package merche
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 )
 
-func Test_handleResponseError(t *testing.T) {
+func TestClient_do(t *testing.T) {
+	type FakeResponse struct{}
+
 	tests := []struct {
 		name            string
 		mercedesAPIMock *httptest.Server
+		want            *Response
 		wantErr         error
 	}{
 		{
@@ -31,19 +36,31 @@ func Test_handleResponseError(t *testing.T) {
 			},
 		},
 		{
-			name:            "mercedes api error",
-			mercedesAPIMock: createFakeServer(http.StatusNoContent, ""),
+			name:            "api error",
+			mercedesAPIMock: createFakeServer(http.StatusNotFound, ""),
 			wantErr: &MercedesAPIError{
-				StatusCode: http.StatusNoContent,
+				StatusCode: http.StatusNotFound,
 			},
+		},
+		{
+			name:            "mercedes not content response",
+			mercedesAPIMock: createFakeServer(http.StatusNoContent, ""),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mockedClient := tt.mercedesAPIMock.Client()
-			resp, _ := mockedClient.Get(tt.mercedesAPIMock.URL)
-			if err := handleResponseError(resp); err.Error() != tt.wantErr.Error() {
-				t.Errorf("handleResponseError() error = %v, wantErr %v", err, tt.wantErr)
+			url, _ := url.Parse(tt.mercedesAPIMock.URL + "/")
+
+			c := NewClient(nil)
+			c.BaseURL = url
+			req, _ := c.newRequest(context.Background(), http.MethodGet, "", http.NoBody)
+
+			var fr FakeResponse
+
+			_, err := c.do(req, &fr)
+			if err != nil && err.Error() != tt.wantErr.Error() {
+				t.Errorf("Client.do() error = %v, wantErr %v", err, tt.wantErr)
+				return
 			}
 		})
 	}

@@ -2,8 +2,11 @@ package merche
 
 import (
 	"context"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -31,7 +34,7 @@ type Client struct {
 }
 
 type service struct {
-	api *Client
+	client *Client
 }
 
 // NewClient returns a new Mercedes API client. If a nil httpClient is
@@ -49,7 +52,7 @@ func NewClient(httpClient *http.Client) *Client {
 		BaseURL:   baseURL,
 		UserAgent: userAgent,
 	}
-	c.common.api = c
+	c.common.client = c
 
 	c.VehicleStatus = (*VehicleStatusService)(&c.common)
 
@@ -74,6 +77,53 @@ func (c *Client) newRequest(ctx context.Context, method, path string, body io.Re
 		req.Header.Set("User-Agent", c.UserAgent)
 	}
 	return req, nil
+}
+
+func (c *Client) do(req *http.Request, v any) (*Response, error) {
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return &Response{resp}, err
+	}
+	defer resp.Body.Close()
+
+	err = checkResponse(resp)
+	if err != nil {
+		return &Response{resp}, err
+	}
+
+	decErr := json.NewDecoder(resp.Body).Decode(v)
+	if decErr == io.EOF {
+		decErr = nil // ignore EOF errors caused by empty response body
+	}
+	if decErr != nil {
+		err = decErr
+	}
+
+	return &Response{resp}, err
+}
+
+func checkResponse(r *http.Response) error {
+	if code := r.StatusCode; http.StatusOK <= code && code <= 299 {
+		return nil
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return errors.New("check response: error reading response body")
+	}
+
+	if isExVeError(r.StatusCode) {
+		var exVeError ExVeError
+		json.Unmarshal(body, &exVeError)
+		return &exVeError
+	}
+	if r.StatusCode == http.StatusUnauthorized {
+		var authErr UnauthorizedError
+		json.Unmarshal(body, &authErr)
+		return &authErr
+	}
+
+	return &MercedesAPIError{r.StatusCode}
 }
 
 // Bool is a helper routine that allocates a new bool value
