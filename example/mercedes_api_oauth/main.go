@@ -34,7 +34,7 @@ func mercedesLoginHandler(w http.ResponseWriter, r *http.Request) {
 		"login",
 	)
 
-	http.Redirect(w, r, redirectURL, 3000)
+	http.Redirect(w, r, redirectURL, http.StatusTemporaryRedirect)
 }
 
 func mercedesCallbackHandler(w http.ResponseWriter, r *http.Request) {
