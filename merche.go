@@ -83,7 +83,7 @@ func (c *Client) newRequest(ctx context.Context, method, path string, body io.Re
 	return req, nil
 }
 
-func (c *Client) do(req *http.Request, v any) (*Response, error) {
+func (c *Client) do(req *http.Request, v interface{}) (*Response, error) {
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return &Response{resp}, err
