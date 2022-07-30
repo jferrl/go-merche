@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// VehicleStatus defiles the response from VehicleStatus.
+// VehicleStatus defines the response from VehicleStatus.
 type VehicleStatus struct {
 	Doorlockstatusdecklid  *Resource `json:"doorlockstatusdecklid,omitempty"`
 	Doorstatusfrontleft    *Resource `json:"doorstatusfrontleft,omitempty"`
