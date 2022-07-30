@@ -24,7 +24,8 @@ func main() {
  
  client := merche.NewClient(nil)
 
- resources, _, err := client.Resources.GetAvailableResources(ctx, &merche.Options{ VehicleID: "EXVETESTVIN000001" })
+ opts := &merche.Options{ VehicleID: "EXVETESTVIN000001" }
+ resources, _, err := client.Resources.GetAvailableResources(ctx, opts)
 }
 ```
 
