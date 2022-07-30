@@ -24,7 +24,7 @@ func main() {
  
  client := merche.NewClient(nil)
 
- resources, _, err := client.VehicleStatus.GetAvailableResources(ctx, &merche.GetVehicleStatusOptions{ VehicleID: "EXVETESTVIN000001" })
+ resources, _, err := client.Resources.GetAvailableResources(ctx, &merche.Options{ VehicleID: "EXVETESTVIN000001" })
 }
 ```
 
@@ -38,7 +38,7 @@ deadlines to various services of the client for handling a request.
 3) Register to the following APIs (all of them):
    - [Electric Vehicle Status](https://developer.mercedes-benz.com/products/electric_vehicle_status)
    - [Fuel Status](https://developer.mercedes-benz.com/products/fuel_status)
-   - [Pay As You Drive Insurance](https://developer.mercedes-benz.com/products/pay_as_you_drive_insurance) 
+   - [Pay As You Drive Insurance](https://developer.mercedes-benz.com/products/pay_as_you_drive_insurance)
    - [Vehicle Lock Status](https://developer.mercedes-benz.com/products/vehicle_lock_status)
    - [Vehicle Status](https://developer.mercedes-benz.com/products/vehicle_status)
 
