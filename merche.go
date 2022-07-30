@@ -34,6 +34,7 @@ type Client struct {
 	VehicleStatus     *VehicleStatusService
 	VehicleLockStatus *VehicleLockStatusService
 	FuelStatus        *FuelStatusService
+	PayAsYouDrive     *PayAsYouDriveService
 }
 
 type service struct {
@@ -61,6 +62,7 @@ func NewClient(httpClient *http.Client) *Client {
 	c.VehicleStatus = (*VehicleStatusService)(&c.common)
 	c.VehicleLockStatus = (*VehicleLockStatusService)(&c.common)
 	c.FuelStatus = (*FuelStatusService)(&c.common)
+	c.PayAsYouDrive = (*PayAsYouDriveService)(&c.common)
 
 	return c
 }
