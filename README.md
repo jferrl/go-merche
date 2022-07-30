@@ -6,6 +6,8 @@
 
 Go library for accessing the Mercedes-Benz vehicles API.
 
+## Why go-merche?
+
 ## Usage
 
 go-merche is compatible with modern Go releases.
@@ -78,6 +80,21 @@ include the specified OAuth token.
 
 Here you can find an example of how to authenticate with Mercedes
 OAuth API <https://github.com/jferrl/go-merche/tree/main/example/mercedes_api_oauth>
+
+## Mercedes API connections
+
+go-merche pkg implements services to connect against the following Mercedes APIs:
+
+- [Fuel Status](https://developer.mercedes-benz.com/products/fuel_status) :white_check_mark:
+- [Pay As You Drive Insurance](https://developer.mercedes-benz.com/products/pay_as_you_drive_insurance) :white_check_mark:
+- [Vehicle Lock Status](https://developer.mercedes-benz.com/products/vehicle_lock_status) :white_check_mark:
+- [Vehicle Status](https://developer.mercedes-benz.com/products/vehicle_status) :white_check_mark:
+
+Take into account that the pkg services are reaching API containers to get all the avalible resources
+in the same API call. In future releases, go-merche will implement individual methods to get data from
+a specific resource from the Mercedes API. :construction:
+
+## Use cases
 
 ## License
 
