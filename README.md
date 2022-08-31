@@ -9,6 +9,12 @@ Go library for accessing the Mercedes-Benz vehicles API. :auto_rickshaw:
 
 ## Why go-merche?
 
+With the launch of connected cars on the market, some brands such as Mercedes-Benz have created a set of APIs with which we can access in "real" time data that our vehicles are generating, in addition to other additional services that may not be intrinsically related to vehicles.
+
+The idea of this package is to provide a set of methods to be able to access the Mercedes-Benz APIs using the Go programming language.
+
+Last but not least, the name of the pkg :sunglasses: . I name it "go-merche" just because "Merche" the diminutive of "Mercedes" said affectively in Spanish.
+
 ## Usage
 
 go-merche is compatible with modern Go releases.
@@ -96,6 +102,10 @@ in the same API call. In future releases, `go-merche` will implement individual 
 a specific resource from the Mercedes API. :construction:
 
 ## Use cases
+
+- Get real data from Mercedes-Benz vehicles.
+- IOT proyects. Just take a look to https://tinygo.org/.
+- ...and many more :stuck_out_tongue_winking_eye:
 
 ## License
 
