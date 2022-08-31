@@ -5,7 +5,7 @@
 [![CodeQL](https://github.com/jferrl/go-merche/workflows/CodeQL/badge.svg)](https://github.com/jferrl/go-merche/actions?query=workflow%3ACodeQL)
 [![codecov](https://codecov.io/gh/jferrl/go-merche/branch/main/graph/badge.svg?token=68I4BZF235)](https://codecov.io/gh/jferrl/go-merche)
 
-Go library for accessing the Mercedes-Benz vehicles API.
+Go library for accessing the Mercedes-Benz vehicles API. :auto_rickshaw:
 
 ## Why go-merche?
 
