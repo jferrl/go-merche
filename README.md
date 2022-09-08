@@ -51,6 +51,7 @@ deadlines to various services of the client for handling a request.
    - [Pay As You Drive Insurance](https://developer.mercedes-benz.com/products/pay_as_you_drive_insurance)
    - [Vehicle Lock Status](https://developer.mercedes-benz.com/products/vehicle_lock_status)
    - [Vehicle Status](https://developer.mercedes-benz.com/products/vehicle_status)
+   - [Electric Vehicle Status](https://developer.mercedes-benz.com/products/electric_vehicle_status)
 
 ## Token Creation
 
@@ -96,6 +97,7 @@ The `go-merche` pkg implements services to connect against the following Mercede
 - [Pay As You Drive Insurance](https://developer.mercedes-benz.com/products/pay_as_you_drive_insurance) :white_check_mark:
 - [Vehicle Lock Status](https://developer.mercedes-benz.com/products/vehicle_lock_status) :white_check_mark:
 - [Vehicle Status](https://developer.mercedes-benz.com/products/vehicle_status) :white_check_mark:
+- [Electric Vehicle Status](https://developer.mercedes-benz.com/products/electric_vehicle_status) :white_check_mark:
 
 Take into account that the pkg services are reaching API containers to get all the avalible resources
 in the same API call. In future releases, `go-merche` will implement individual methods to get data from
@@ -104,7 +106,7 @@ a specific resource from the Mercedes API. :construction:
 ## Use cases
 
 - Get real data from Mercedes-Benz vehicles.
-- IOT proyects. Just take a look to https://tinygo.org/.
+- IOT proyects. Just take a look to <https://tinygo.org/>.
 - ...and many more :stuck_out_tongue_winking_eye:
 
 ## License
