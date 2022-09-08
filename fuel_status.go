@@ -27,13 +27,13 @@ type FuelStatusService service
 func (s *FuelStatusService) GetFuelStatus(ctx context.Context, opts *Options) ([]*FuelStatus, *Response, error) {
 	path := fmt.Sprintf("%v/%v/containers/fuelstatus", apiPathPrefix, opts.VehicleID)
 
-	req, err := s.client.newRequest(ctx, http.MethodGet, path, http.NoBody)
+	req, err := s.client.NewRequest(ctx, http.MethodGet, path, http.NoBody)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	var status []*FuelStatus
-	resp, err := s.client.do(req, &status)
+	resp, err := s.client.Do(req, &status)
 	if err != nil {
 		return nil, resp, err
 	}

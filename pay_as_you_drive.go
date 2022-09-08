@@ -28,13 +28,13 @@ type PayAsYouDriveService service
 func (s *PayAsYouDriveService) GetPayAsYouDriveStatus(ctx context.Context, opts *Options) ([]*PayAsYouDriveStatus, *Response, error) {
 	path := fmt.Sprintf("%v/%v/containers/payasyoudrive", apiPathPrefix, opts.VehicleID)
 
-	req, err := s.client.newRequest(ctx, http.MethodGet, path, http.NoBody)
+	req, err := s.client.NewRequest(ctx, http.MethodGet, path, http.NoBody)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	var status []*PayAsYouDriveStatus
-	resp, err := s.client.do(req, &status)
+	resp, err := s.client.Do(req, &status)
 	if err != nil {
 		return nil, resp, err
 	}

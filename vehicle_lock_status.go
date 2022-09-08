@@ -29,13 +29,13 @@ type VehicleLockStatusService service
 func (s *VehicleLockStatusService) GetVehicleLockStatus(ctx context.Context, opts *Options) ([]*VehicleLockStatus, *Response, error) {
 	path := fmt.Sprintf("%v/%v/containers/vehiclelockstatus", apiPathPrefix, opts.VehicleID)
 
-	req, err := s.client.newRequest(ctx, http.MethodGet, path, http.NoBody)
+	req, err := s.client.NewRequest(ctx, http.MethodGet, path, http.NoBody)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	var status []*VehicleLockStatus
-	resp, err := s.client.do(req, &status)
+	resp, err := s.client.Do(req, &status)
 	if err != nil {
 		return nil, resp, err
 	}

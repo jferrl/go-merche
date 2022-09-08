@@ -67,7 +67,9 @@ func NewClient(httpClient *http.Client) *Client {
 	return c
 }
 
-func (c *Client) newRequest(ctx context.Context, method, path string, body io.Reader) (*http.Request, error) {
+// NewRequest creates a Mercedes API request. A path can be provided in path,
+// in which case it is resolved relative to the BaseURL of the Client.
+func (c *Client) NewRequest(ctx context.Context, method, path string, body io.Reader) (*http.Request, error) {
 	if !strings.HasSuffix(c.BaseURL.Path, "/") {
 		return nil, fmt.Errorf("BaseURL must have a trailing slash, but %q does not", c.BaseURL)
 	}
@@ -87,7 +89,10 @@ func (c *Client) newRequest(ctx context.Context, method, path string, body io.Re
 	return req, nil
 }
 
-func (c *Client) do(req *http.Request, v interface{}) (*Response, error) {
+// Do sends an API request and lets you handle the api response. If an error
+// or API Error occurs, the error will contain more information. Otherwise you
+// are supposed to read and close the response's Body.
+func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return &Response{resp}, err

@@ -85,9 +85,9 @@ func TestClient_do(t *testing.T) {
 
 			c := NewClient(nil)
 			c.BaseURL = url
-			req, _ := c.newRequest(context.Background(), http.MethodGet, "", http.NoBody)
+			req, _ := c.NewRequest(context.Background(), http.MethodGet, "", http.NoBody)
 
-			_, err := c.do(req, tt.args.v)
+			_, err := c.Do(req, tt.args.v)
 			if err != nil && err.Error() != tt.wantErr.Error() {
 				t.Errorf("Client.do() error = %v, wantErr %v", err, tt.wantErr)
 				return

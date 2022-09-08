@@ -20,13 +20,13 @@ type ResourcesService service
 func (s *ResourcesService) GetAvailableResources(ctx context.Context, opts *Options) ([]*ResourceMetaInfo, *Response, error) {
 	path := fmt.Sprintf("%v/%v/resources", apiPathPrefix, opts.VehicleID)
 
-	req, err := s.client.newRequest(ctx, http.MethodGet, path, http.NoBody)
+	req, err := s.client.NewRequest(ctx, http.MethodGet, path, http.NoBody)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	var resources []*ResourceMetaInfo
-	resp, err := s.client.do(req, &resources)
+	resp, err := s.client.Do(req, &resources)
 	if err != nil {
 		return nil, resp, err
 	}
