@@ -51,7 +51,6 @@ deadlines to various services of the client for handling a request.
    - [Pay As You Drive Insurance](https://developer.mercedes-benz.com/products/pay_as_you_drive_insurance)
    - [Vehicle Lock Status](https://developer.mercedes-benz.com/products/vehicle_lock_status)
    - [Vehicle Status](https://developer.mercedes-benz.com/products/vehicle_status)
-   - [Electric Vehicle Status](https://developer.mercedes-benz.com/products/electric_vehicle_status)
 
 ## Token Creation
 
