@@ -2,6 +2,7 @@ package merche
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -18,7 +19,7 @@ func (w *writer) Write(data []byte) (n int, err error) {
 	return len(data), nil
 }
 
-func TestClient_do(t *testing.T) {
+func TestClient_Do(t *testing.T) {
 	type fakeResponse struct{}
 
 	type args struct {
@@ -90,6 +91,68 @@ func TestClient_do(t *testing.T) {
 			_, err := c.Do(req, tt.args.v)
 			if err != nil && err.Error() != tt.wantErr.Error() {
 				t.Errorf("Client.do() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
+
+func TestClient_NewRequest(t *testing.T) {
+	invalidBaseURL, _ := url.Parse("https://api.mercedes-benz.com")
+
+	type fields struct {
+		BaseURL *url.URL
+	}
+	type args struct {
+		ctx    context.Context
+		method string
+		path   string
+		body   io.Reader
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "invalid base url",
+			fields: fields{
+				BaseURL: invalidBaseURL,
+			},
+			args: args{
+				ctx:    context.Background(),
+				method: http.MethodGet,
+				path:   "",
+				body:   nil,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid method",
+			fields: fields{
+				BaseURL: nil,
+			},
+			args: args{
+				ctx:    nil,
+				method: http.MethodGet,
+				path:   "",
+				body:   nil,
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := NewClient(nil)
+
+			if tt.fields.BaseURL != nil {
+				c.BaseURL = tt.fields.BaseURL
+			}
+
+			_, err := c.NewRequest(tt.args.ctx, tt.args.method, tt.args.path, tt.args.body)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Client.NewRequest() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 		})

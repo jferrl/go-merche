@@ -28,6 +28,19 @@ func TestPayAsYouDriveService_GetPayAsYouDriveStatus(t *testing.T) {
 		wantErr bool
 	}{
 		{
+			name: "nil context error",
+			fields: fields{
+				mercedesAPIMock: createFakeServer(http.StatusOK, ""),
+			},
+			args: args{
+				ctx: nil,
+				opts: &Options{
+					VehicleID: fakeVehicleID,
+				},
+			},
+			wantErr: true,
+		},
+		{
 			name: "decoding response error",
 			fields: fields{
 				mercedesAPIMock: createFakeServer(http.StatusOK, "invalid_response"),
