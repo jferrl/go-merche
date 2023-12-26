@@ -2,7 +2,6 @@
 
 [![GoDoc](https://img.shields.io/static/v1?label=godoc&message=reference&color=blue)](https://pkg.go.dev/github.com/jferrl/go-merche)
 [![Test Status](https://github.com/jferrl/go-merche/workflows/tests/badge.svg)](https://github.com/jferrl/go-merche/actions?query=workflow%3Atests)
-[![CodeQL](https://github.com/jferrl/go-merche/workflows/CodeQL/badge.svg)](https://github.com/jferrl/go-merche/actions?query=workflow%3ACodeQL)
 [![codecov](https://codecov.io/gh/jferrl/go-merche/branch/main/graph/badge.svg?token=68I4BZF235)](https://codecov.io/gh/jferrl/go-merche)
 
 Go library for accessing the Mercedes-Benz vehicles API. :auto_rickshaw:
